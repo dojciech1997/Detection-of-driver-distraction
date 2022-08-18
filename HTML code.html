@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Detection of distraction</title>
+    <style>
+    body {
+        background-color: #F27272;
+        }
+    label, button {
+        color: #000000;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin-left: 40px;
+        }
+     input {
+        color: #000000;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin-left: 40px;
+        }
+    </style>
+    <script>
+        var callAPI = (name,password)=>{
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({"name":name,"password":password});
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            fetch(" https://9xh1xqs9qj.execute-api.eu-central-1.amazonaws.com/stage-distraction-1", requestOptions)
+            .then(response => response.text())
+            .then(result => alert(JSON.parse(result).body))
+            .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+<body>
+    <form>
+        <label>Name :</label>
+        <input type="text" id="name">
+        <label>Password :</label>
+        <input type="password" id="password">
+        <button type="button" onclick="callAPI(document.getElementById('name').value,document.getElementById('password').value)">Call API</button>
+    </form>
+</body>
+</html>
